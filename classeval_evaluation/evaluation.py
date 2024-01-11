@@ -37,6 +37,7 @@ if __name__ == '__main__':
     result = {}
     if args.greedy == 1:
         result["pass_1_greedy"] = AutoT.cal_metrics_pass_at_k(model_list, 1, 1)
+        print("done")
     else:
         result["pass_1"] = AutoT.cal_metrics_pass_at_k(model_list, 1, 5)
         result["pass_3"] = AutoT.cal_metrics_pass_at_k(model_list, 3, 5)
@@ -44,8 +45,11 @@ if __name__ == '__main__':
     save_path = PathUtil().test_result_data("pass_at_k_result", 'json')
 
     if os.path.exists(save_path):
+        print(save_path)
         with open(save_path, encoding='utf-8') as file:
+            print("done2")
             ori_data = json.load(file)
+            print("loaded")
 
         if args.greedy == 1:
             if "pass_1_greedy" in ori_data:
@@ -63,6 +67,8 @@ if __name__ == '__main__':
                 ori_data["pass_5"] = result["pass_5"]
     else:
         ori_data = result
+    
+    print("ready to save")
 
     with open(save_path, 'w') as f:
         json.dump(ori_data, f, indent=4, sort_keys=True)
